@@ -75,58 +75,39 @@ public class Tree<T extends Comparable<? super T>> implements Iterable<T> {
     }
 
     public void erase(T data) {
-        Node<T> parent = null;
-        Node<T> traveller = root;
-        boolean leftDirection = false;
+        root = eraseRecursive(root, data);
+    }
 
-        while (traveller.data.compareTo(data) != 0) {
-            parent = traveller;
-            if (data.compareTo(traveller.data) < 0) {
-                traveller = traveller.left;
-                leftDirection = true;
-            } else {
-                traveller = traveller.right;
-                leftDirection = false;
-            }
+    private Node<T> eraseRecursive(Node<T> current, T data) {
+        if (current == null) {
+            return null;
         }
 
-        if (traveller.right == null && traveller.left == null) {
-            if (leftDirection) {
-                parent.left = null;
-            } else {
-                parent.right = null;
-            }
-        } else if (traveller.left != null) {
-            Node<T> subparent = traveller;
-            Node<T> removal = traveller.left;
-
-            while (removal.right != null) {
-                subparent = removal;
-                removal = removal.right;
+        if (data.compareTo(current.data) < 0) {
+            current.left = eraseRecursive(current.left, data);
+        } else if (data.compareTo(current.data) > 0) {
+            current.right = eraseRecursive(current.right, data);
+        } else {
+            // Uzel má pouze jeden potomek nebo žádného
+            if (current.left == null) {
+                return current.right;
+            } else if (current.right == null) {
+                return current.left;
             }
 
-            traveller.data = removal.data;
-            if (subparent != traveller) {
-                subparent.left = removal.left;
-            } else {
-                subparent.right = removal.left;
-            }
-        } else if (traveller.right != null) {
-            Node<T> subparent = traveller;
-            Node<T> removal = traveller.right;
-
-            while (removal.left != null) {
-                subparent = removal;
-                removal = removal.left;
-            }
-
-            traveller.data = removal.data;
-            if (subparent == traveller) {
-                subparent.right = removal.right;
-            } else {
-                subparent.left = removal.right;
-            }
+            // Uzel má oba potomky
+            current.data = findSmallestValue(current.right);
+            current.right = eraseRecursive(current.right, current.data);
         }
+
+        return current;
+    }
+
+    private T findSmallestValue(Node<T> root) {
+        while (root.left != null) {
+            root = root.left;
+        }
+        return root.data;
     }
 
     public boolean contains(T data) {
