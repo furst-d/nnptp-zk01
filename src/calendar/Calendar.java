@@ -6,47 +6,41 @@
 package calendar;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
 /**
  *
  * @author rodi0878
  */
-public class Calendar implements Iterable<ESet>{
+public class Calendar implements Iterable<EventSet>{
 
     @Override
-    public Iterator<ESet> iterator() {
+    public Iterator<EventSet> iterator() {
         return calendar.iterator();
     }
     
-    private Tree<ESet> calendar;
+    private Tree<EventSet> calendar;
 
     public Calendar() {
         calendar = new Tree<>();
     }
     
-    
-    
-    public void addEv(Event ev) {
-        ESet es = new ESet(ev.getDate());
-        if (calendar.contaix(es)) {
-            es = calendar.get(es);
+    public void addEvent(Event ev) {
+        EventSet eventSet = new EventSet(ev.getDate());
+        if (calendar.contaix(eventSet)) {
+            eventSet = calendar.get(eventSet);
         } else {
-            calendar.add(es);
+            calendar.add(eventSet);
         }
         
-        es.evset.add(ev);
+        eventSet.evset.add(ev);
     }
     
-    public ESet eventsList(Date date) {
-        return calendar.get(new ESet(date));
+    public EventSet eventsList(Date date) {
+        return calendar.get(new EventSet(date));
     }
     
     public void DeleteAll(Date date) {
-        calendar.erase(new ESet(date));
+        calendar.erase(new EventSet(date));
     }
-    
-    
 }
