@@ -55,7 +55,7 @@ public class INPTP_Clean00 {
             System.out.println(c1.eventSet);
         }
 
-        calendar.DeleteAll(new Date(117, java.util.Calendar.JULY, 1));
+        calendar.deleteAll(new Date(117, java.util.Calendar.JULY, 1));
         System.out.println("");
 
         for (EventSet c1 : calendar) {

@@ -29,9 +29,9 @@ class CalendarTest {
         Date date = new Date(2024, java.util.Calendar.JUNE, 15);
 
         calendar.addEvent(new Event(date, "Conference"));
-        calendar.DeleteAll(date);
+        calendar.deleteAll(date);
 
         EventSet eventSet = calendar.eventsList(date);
-        assertNull( eventSet);
+        assertNull(eventSet);
     }
 }

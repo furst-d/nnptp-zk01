@@ -19,10 +19,14 @@ public class Calendar implements Iterable<EventSet>{
         return calendar.iterator();
     }
     
-    private Tree<EventSet> calendar;
+    private final Tree<EventSet> calendar;
 
     public Calendar() {
         calendar = new Tree<>();
+    }
+
+    public EventSet eventsList(Date date) {
+        return calendar.get(new EventSet(date));
     }
     
     public void addEvent(Event ev) {
@@ -36,11 +40,7 @@ public class Calendar implements Iterable<EventSet>{
         eventSet.eventSet.add(ev);
     }
     
-    public EventSet eventsList(Date date) {
-        return calendar.get(new EventSet(date));
-    }
-    
-    public void DeleteAll(Date date) {
+    public void deleteAll(Date date) {
         calendar.erase(new EventSet(date));
     }
 }
