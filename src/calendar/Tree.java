@@ -5,35 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
-
-    @Override
-    public Iterator<E> iterator() {
-        List<E> list = new ArrayList<>();
-        BiConsumer<BiConsumer, Node<E>> cf = (f, c) -> {
-           if (c.left != null) {
-                f.accept(f, c.left);
-            }
-            list.add(c.data);
-
-            
-            if (c.right != null) {
-                f.accept(f, c.right);
-            }
-        };
-
-        cf.accept(cf, root);
-        return list.iterator();
-    }
-
+public class Tree<T extends Comparable<? super T>> implements Iterable<T> {
     private static class Node<E> {
-
         public Node<E> left;
         public Node<E> right;
         public E data;
 
-        public Node() {
-        }
+        public Node() {}
 
         public Node(E data) {
             this.data = data;
@@ -46,21 +24,36 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
 
     }
 
-    
+    private Node<T> root;
 
-    public Tree() {
+    public Tree() {}
+
+    public T get(T data) {
+        Node<T> traveller = root;
+
+        while (traveller != null) {
+            if (data.compareTo(traveller.data) == 0) {
+                return traveller.data;
+            }
+
+            if (data.compareTo(traveller.data) < 0) {
+                traveller = traveller.left;
+            } else {
+                traveller = traveller.right;
+            }
+        }
+
+        return null;
     }
-    
-    private Node<E> root;
 
-    public void add(E data) {
+    public void add(T data) {
         if (root == null) {
             root = new Node<>(data);
             return;
         }
 
-        Node<E> parent = null;
-        Node<E> traveller = root;
+        Node<T> parent = null;
+        Node<T> traveller = root;
         boolean leftDirection = false;
 
         while (traveller != null) {
@@ -81,9 +74,9 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
         }
     }
 
-    public void erase(E data) {
-        Node<E> parent = null;
-        Node<E> traveller = root;
+    public void erase(T data) {
+        Node<T> parent = null;
+        Node<T> traveller = root;
         boolean leftDirection = false;
 
         while (traveller.data.compareTo(data) != 0) {
@@ -104,8 +97,8 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
                 parent.right = null;
             }
         } else if (traveller.left != null) {
-            Node<E> subparent = traveller;
-            Node<E> removal = traveller.left;
+            Node<T> subparent = traveller;
+            Node<T> removal = traveller.left;
 
             while (removal.right != null) {
                 subparent = removal;
@@ -119,8 +112,8 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
                 subparent.right = removal.left;
             }
         } else if (traveller.right != null) {
-            Node<E> subparent = traveller;
-            Node<E> removal = traveller.right;
+            Node<T> subparent = traveller;
+            Node<T> removal = traveller.right;
 
             while (removal.left != null) {
                 subparent = removal;
@@ -136,8 +129,8 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
         }
     }
 
-    public boolean contaix(E data) {
-        Node<E> traveller = root;
+    public boolean contains(T data) {
+        Node<T> traveller = root;
 
         while (traveller != null) {
             if (data.compareTo(traveller.data) == 0) {
@@ -154,22 +147,23 @@ public class Tree<E extends Comparable<? super E>> implements Iterable<E> {
         return false;
     }
 
-    public E get(E data) {
-        Node<E> traveller = root;
-
-        while (traveller != null) {
-            if (data.compareTo(traveller.data) == 0) {
-                return traveller.data;
+    @Override
+    public Iterator<T> iterator() {
+        List<T> list = new ArrayList<>();
+        BiConsumer<BiConsumer, Node<T>> biConsumer = (consumer, node) -> {
+            if (node.left != null) {
+                consumer.accept(consumer, node.left);
             }
+            list.add(node.data);
 
-            if (data.compareTo(traveller.data) < 0) {
-                traveller = traveller.left;
-            } else {
-                traveller = traveller.right;
+
+            if (node.right != null) {
+                consumer.accept(consumer, node.right);
             }
-        }
+        };
 
-        return null;
+        biConsumer.accept(biConsumer, root);
+        return list.iterator();
     }
 
     @Override

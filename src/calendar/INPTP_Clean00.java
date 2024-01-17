@@ -31,13 +31,13 @@ public class INPTP_Clean00 {
          3) celý repozitář odevzdat na stag - semestrální práce
          */
 
-        Storage s = new Storage();
-        s.store(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-4"));
-        s.store(new Event(new Date(117, java.util.Calendar.AUGUST, 1), "1-4"));
-        s.unstore(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-4"));
+        Storage storage = new Storage();
+        storage.store(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-4"));
+        storage.store(new Event(new Date(117, java.util.Calendar.AUGUST, 1), "1-4"));
+        storage.unstore(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-4"));
 
-        List<Event> ll = s.load(Event.class);
-        System.out.println(ll);
+        List<Event> eventList = storage.load(Event.class);
+        System.out.println(eventList);
         System.out.println("");
 
         //////////////////////////////////
@@ -52,7 +52,7 @@ public class INPTP_Clean00 {
 
         for (EventSet c1 : calendar) {
             System.out.println(c1.date);
-            System.out.println(c1.evset);
+            System.out.println(c1.eventSet);
         }
 
         calendar.DeleteAll(new Date(117, java.util.Calendar.JULY, 1));
@@ -60,7 +60,7 @@ public class INPTP_Clean00 {
 
         for (EventSet c1 : calendar) {
             System.out.println(c1.date);
-            System.out.println(c1.evset);
+            System.out.println(c1.eventSet);
         }
 
     }
