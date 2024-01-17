@@ -21,7 +21,6 @@ public class Calendar implements Iterable<ESet>{
         return calendar.iterator();
     }
     
-    
     private Tree<ESet> calendar;
 
     public Calendar() {

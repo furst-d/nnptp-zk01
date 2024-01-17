@@ -15,13 +15,13 @@ import java.util.Objects;
  */
 public class Event implements Comparable<Event>, Serializable {
 
-    private Date date;
-    private String title;
+    private final Date date;
+    private final String title;
   
 
     @Override
-    public int compareTo(Event o) {
-        return date.compareTo(o.date);
+    public int compareTo(Event event) {
+        return date.compareTo(event.date);
     }
 
     public Event(Date date, String title) {
@@ -39,10 +39,8 @@ public class Event implements Comparable<Event>, Serializable {
             return false;
         }
         final Event other = (Event) obj;
-        if (!Objects.equals(this.date, other.date)) {
-            return false;
-        }
-        return true;
+
+        return Objects.equals(this.date, other.date);
     }
     
     private String text;
@@ -62,9 +60,9 @@ public class Event implements Comparable<Event>, Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.date);
-        return hash;
+        return 97 * hash + Objects.hashCode(this.date);
     }
+
     @Override
     public String toString() {
         return "Event{" + "date=" + date + ", title=" + title + ", text=" + text + '}';
