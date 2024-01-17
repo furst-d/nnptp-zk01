@@ -32,9 +32,9 @@ public class INPTP_Clean00 {
          */
 
         Storage s = new Storage();
-        s.store(new Event(new Date(117, 6, 1), "1-4"));
-        s.store(new Event(new Date(117, 7, 1), "1-4"));
-        s.unstore(new Event(new Date(117, 6, 1), "1-4"));
+        s.store(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-4"));
+        s.store(new Event(new Date(117, java.util.Calendar.AUGUST, 1), "1-4"));
+        s.unstore(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-4"));
 
         List<Event> ll = s.load(Event.class);
         System.out.println(ll);
@@ -43,22 +43,22 @@ public class INPTP_Clean00 {
         //////////////////////////////////
         
         Calendar calendar = new Calendar();
-        calendar.addEv(new Event(new Date(117, 6, 1), "1-1"));
-        calendar.addEv(new Event(new Date(117, 6, 2), "2-1"));
-        calendar.addEv(new Event(new Date(117, 6, 3), "3-1"));
-        calendar.addEv(new Event(new Date(117, 6, 1), "1-2"));
-        calendar.addEv(new Event(new Date(117, 6, 1), "1-3"));
-        calendar.addEv(new Event(new Date(117, 6, 1), "1-4"));
+        calendar.addEvent(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-1"));
+        calendar.addEvent(new Event(new Date(117, java.util.Calendar.JULY, 2), "2-1"));
+        calendar.addEvent(new Event(new Date(117, java.util.Calendar.JULY, 3), "3-1"));
+        calendar.addEvent(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-2"));
+        calendar.addEvent(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-3"));
+        calendar.addEvent(new Event(new Date(117, java.util.Calendar.JULY, 1), "1-4"));
 
-        for (ESet c1 : calendar) {
+        for (EventSet c1 : calendar) {
             System.out.println(c1.date);
             System.out.println(c1.evset);
         }
 
-        calendar.DeleteAll(new Date(117, 6, 1));
+        calendar.DeleteAll(new Date(117, java.util.Calendar.JULY, 1));
         System.out.println("");
 
-        for (ESet c1 : calendar) {
+        for (EventSet c1 : calendar) {
             System.out.println(c1.date);
             System.out.println(c1.evset);
         }
