@@ -17,6 +17,7 @@ public class Event implements Comparable<Event>, Serializable {
 
     private final Date date;
     private final String title;
+    private String text;
   
 
     @Override
@@ -42,8 +43,6 @@ public class Event implements Comparable<Event>, Serializable {
 
         return Objects.equals(this.date, other.date);
     }
-    
-    private String text;
   
     public Date getDate() {
         return date;
